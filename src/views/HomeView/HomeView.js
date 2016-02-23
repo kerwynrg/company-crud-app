@@ -5,7 +5,7 @@ class HomeView extends BaseComponent {
   render () {
     return (
       <div className='container text-center'>
-        <h1>Home View for Company CRUD</h1>
+        <h1>Company CRUD</h1>
       </div>
     );
   }

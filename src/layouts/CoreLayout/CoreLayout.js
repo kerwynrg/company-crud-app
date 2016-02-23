@@ -3,7 +3,10 @@
 import '../../styles/core.scss';
 import { AppBar, Styles } from 'material-ui';
 import Title from 'react-title-component';
-import { BaseComponent, AppLeftNav } from 'components/core';
+import {
+  BaseComponent,
+  AppLeftNav
+} from 'components/core';
 
 class CoreLayout extends BaseComponent {
   constructor (props) {
@@ -84,7 +87,7 @@ class CoreLayout extends BaseComponent {
           <AppBar
             title={title}
             showMenuIconButton={this.state.showMenuIconButton}
-            onLeftIconButtonTouchTap={this.handleTouchTapLeftIconButton} />
+            onLeftIconButtonTouchTap={this.handleTouchTapLeftIconButton}/>
           <AppLeftNav
             location={location}
             open={leftNavOpen}

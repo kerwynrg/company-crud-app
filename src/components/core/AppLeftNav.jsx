@@ -1,5 +1,5 @@
 /* @flow */
-import { LeftNav, List, ListItem, Styles } from 'material-ui';
+import { LeftNav, List, ListItem, Styles, Divider } from 'material-ui';
 import {SelectableContainerEnhance} from 'material-ui/lib/hoc/selectable-enhance';
 
 const SelectableList = SelectableContainerEnhance(List);
@@ -21,7 +21,6 @@ class AppLeftNav extends React.Component {
   };
 
   render () {
-    console.info(this.context.muiTheme);
     let {
       open,
       onRequestChangeNav,
@@ -32,7 +31,7 @@ class AppLeftNav extends React.Component {
     let style = Object.assign({}, this.Styles, {
       zIndex: Styles.ZIndex.appBar - 1
     });
-    console.info(style);
+
     return (
       <LeftNav
         location={this.props.location}
@@ -44,6 +43,10 @@ class AppLeftNav extends React.Component {
         <SelectableList
           value={3}
           valueLink={{value: location.pathname, requestChange: onRequestChangeList}}>
+          <ListItem
+            primaryText='Home'
+            value='/'/>
+          <Divider />
           <ListItem
             primaryText='Companies'
             primaryTogglesNestedList={this.state.primaryTogglesNestedList}
