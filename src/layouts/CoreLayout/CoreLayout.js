@@ -1,9 +1,9 @@
 /* @flow */
 
 import '../../styles/core.scss';
-import { AppBar, LeftNav } from 'material-ui';
+import { AppBar } from 'material-ui';
 import Title from 'react-title-component';
-import { BaseComponent, MaterialIcon } from 'components/core';
+import { BaseComponent, AppLeftNav } from 'components/core';
 
 class CoreLayout extends BaseComponent {
   constructor (props) {
@@ -15,15 +15,21 @@ class CoreLayout extends BaseComponent {
     };
   }
 
-  toggleLeftNav = () => {
+  toggleLeftNav = (open) => {
+    open = open !== undefined ? open : !this.state.leftNavOpen;
     this.setState({
-      leftNavOpen: !this.state.leftNavOpen
+      leftNavOpen: open
     });
   };
 
   handleTouchTapLeftIconButton = () => {
     this.toggleLeftNav();
   };
+
+  handleRequestChangeList = (event, value) => {
+    this.context.router.push(value);
+    this.toggleLeftNav(false);
+  }
 
   render () {
     let {
@@ -43,13 +49,14 @@ class CoreLayout extends BaseComponent {
         <div className='view-container'>
           <AppBar
             title={title}
-            onLeftIconButtonTouchTap={this.handleTouchTapLeftIconButton}/>
+            onLeftIconButtonTouchTap={this.handleTouchTapLeftIconButton}
+            />
           {children}
-          <LeftNav
+          <AppLeftNav
             location={location}
-            docked={false}
             open={leftNavOpen}
-            onRequestChange={this.toggleLeftNav}
+            onRequestChangeNav={this.toggleLeftNav}
+            onRequestChangeList={this.handleRequestChangeList}
           />
         </div>
       </div>
@@ -60,6 +67,10 @@ class CoreLayout extends BaseComponent {
 CoreLayout.propTypes = {
   children: React.PropTypes.node,
   location: React.PropTypes.object
+};
+
+CoreLayout.contextTypes = {
+  router: React.PropTypes.object.isRequired
 };
 
 export default CoreLayout;
