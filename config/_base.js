@@ -44,6 +44,10 @@ const config = {
     'react-router-redux',
     'redux'
   ],
+  compiler_globals : {
+    React: 'react',
+    ReactDOM: 'react-dom'
+  },
 
   // ----------------------------------
   // Test Configuration

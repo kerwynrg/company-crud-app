@@ -55,7 +55,8 @@ webpackConfig.plugins = [
     minify: {
       collapseWhitespace: true
     }
-  })
+  }),
+  new webpack.ProvidePlugin(config.compiler_globals)
 ];
 
 if (__DEV__) {
