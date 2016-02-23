@@ -1,34 +1,52 @@
 /* @flow */
-import { LeftNav, List, ListItem } from 'material-ui';
+import { LeftNav, List, ListItem, Styles } from 'material-ui';
 import {SelectableContainerEnhance} from 'material-ui/lib/hoc/selectable-enhance';
+
 const SelectableList = SelectableContainerEnhance(List);
 
 class AppLeftNav extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      selectedIndex: 0
+      selectedIndex: 0,
+      docked: true,
+      primaryTogglesNestedList: true
     };
   }
 
-  someBind = () => {
-    console.info('some bind');
-  }
+  get Styles () {
+    return {
+      paddingTop: this.context.muiTheme.appBar.height
+    };
+  };
 
   render () {
+    console.info(this.context.muiTheme);
+    let {
+      open,
+      onRequestChangeNav,
+      onRequestChangeList,
+      ...other
+    } = this.props;
+
+    let style = Object.assign({}, this.Styles, {
+      zIndex: Styles.ZIndex.appBar - 1
+    });
+    console.info(style);
     return (
       <LeftNav
         location={this.props.location}
-        docked={false}
-        open={this.props.open}
-        onRequestChange={this.props.onRequestChangeNav}>
+        open={open}
+        docked={this.state.docked}
+        onRequestChange={onRequestChangeNav}
+        style={style}
+        {...other}>
         <SelectableList
           value={3}
-          subheader='Menu'
-          valueLink={{value: location.pathname, requestChange: this.props.onRequestChangeList}}>
+          valueLink={{value: location.pathname, requestChange: onRequestChangeList}}>
           <ListItem
             primaryText='Companies'
-            primaryTogglesNestedList={true}
+            primaryTogglesNestedList={this.state.primaryTogglesNestedList}
             nestedItems={[
               <ListItem
                 key={1}
@@ -53,6 +71,10 @@ AppLeftNav.propTypes = {
   open: React.PropTypes.bool,
   onRequestChangeNav: React.PropTypes.func,
   onRequestChangeList: React.PropTypes.func
+};
+
+AppLeftNav.contextTypes = {
+  muiTheme: React.PropTypes.object.isRequired
 };
 
 export default AppLeftNav;
