@@ -6,6 +6,7 @@ import {
   List,
   ListItem,
   FloatingActionButton,
+  RaisedButton,
   Styles
 } from 'material-ui';
 import Add from 'material-ui/lib/svg-icons/content/add';
@@ -17,17 +18,14 @@ const {
   Colors
 } = Styles;
 
-const multiLine = true;
-const miniIcon = true;
+const trueVar = true;
 class CreateView extends BaseComponent {
   constructor (props) {
     super(props);
 
     this.state = {
-      owners: [
-        'Kerwyn',
-        'Nohemi'
-      ]
+      owners: [],
+      canSubmit: false
     };
   }
 
@@ -58,6 +56,40 @@ class CreateView extends BaseComponent {
     return styles;
   };
 
+  handleAddOwner = (event) => {
+    this.state.owners.push('');
+    this.setState({
+      owners: this.state.owners
+    });
+  };
+
+  handleRemoveOwner = (params, event) => {
+    let owners = this.state.owners;
+    owners = _.filter(owners, function (value, index) {
+      return index !== params.key;
+    });
+
+    this.setState({
+      owners: owners
+    });
+  };
+
+  enableButton = () => {
+    this.setState({
+      canSubmit: true
+    });
+  };
+
+  disableButton = () => {
+    this.setState({
+      canSubmit: false
+    });
+  };
+
+  submitForm = (data) => {
+    console.info(data);
+  };
+
   render () {
     var self = this;
     return (
@@ -68,10 +100,12 @@ class CreateView extends BaseComponent {
         }} >
         <div className='container text-center'>
           <h2>New company</h2>
-          <Form>
+          <Form
+            onValid={this.enableButton}
+            onInvalid={this.disableButton}
+            onValidSubmit={this.submitForm} >
             <FormsyText
               name='name'
-              validations='isDefaultRequiredValue'
               validationError='Error name'
               required
               floatingLabelText='Name'
@@ -80,7 +114,7 @@ class CreateView extends BaseComponent {
               name='address'
               required
               floatingLabelText='Address'
-              multiLine={multiLine}
+              multiLine={trueVar}
               rows={2}
               rowsMax={4}
               style={this.styles.general.input} />
@@ -111,7 +145,10 @@ class CreateView extends BaseComponent {
             <div>
               <div>
                 <div style={this.styles.inline.buttonDiv}>
-                  <FloatingActionButton backgroundColor={Colors.green600} mini={miniIcon}>
+                  <FloatingActionButton
+                    backgroundColor={Colors.green600}
+                    mini={trueVar}
+                    onClick={this.handleAddOwner}>
                     <Add color={Colors.white}/>
                   </FloatingActionButton>
                 </div>
@@ -121,17 +158,21 @@ class CreateView extends BaseComponent {
               </div>
               <Divider />
               <List>
-                {this.state.owners.map(function (result) {
+                {this.state.owners.map(function (result, key) {
+                  let handleRemoveOwner = self.handleRemoveOwner.bind(this, {key: key});
                   return (
-                    <ListItem key={result} disabled>
+                    <ListItem key={key} disabled>
                       <div style={self.styles.inline.buttonDiv}>
-                        <FloatingActionButton backgroundColor={Colors.red600} mini={miniIcon}>
+                        <FloatingActionButton
+                          backgroundColor={Colors.red600}
+                          mini={trueVar}
+                          onClick={handleRemoveOwner}>
                           <Remove color={Colors.white}/>
                         </FloatingActionButton>
                       </div>
                       <div style={self.styles.inline.inputDiv}>
                         <FormsyText
-                          name='phone[]'
+                          name={`owner[${key}]`}
                           validations='isAlphanumeric'
                           validationError='Error'
                           required
@@ -143,6 +184,13 @@ class CreateView extends BaseComponent {
                   );
                 })}
               </List>
+            </div>
+            <div style={{textAlign: 'right'}}>
+              <RaisedButton
+                type='submit'
+                label='Save'
+                secondary={trueVar}
+                disabled={!this.state.canSubmit} />
             </div>
           </Form>
         </div>

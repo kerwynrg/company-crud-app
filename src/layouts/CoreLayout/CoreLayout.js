@@ -67,6 +67,7 @@ class CoreLayout extends BaseComponent {
   get contentStyles () {
     return {
       marginLeft: this.state.muiTheme.leftNav.width,
+      marginTop: this.state.muiTheme.appBar.height + 20,
       paddingLeft: 20
     };
   };
@@ -90,7 +91,11 @@ class CoreLayout extends BaseComponent {
           <AppBar
             title={title}
             showMenuIconButton={this.state.showMenuIconButton}
-            onLeftIconButtonTouchTap={this.handleTouchTapLeftIconButton}/>
+            onLeftIconButtonTouchTap={this.handleTouchTapLeftIconButton}
+            style={{
+              position: 'fixed',
+              top: 0
+            }} />
           <AppLeftNav
             location={location}
             open={leftNavOpen}

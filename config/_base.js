@@ -46,7 +46,8 @@ const config = {
   ],
   compiler_globals : {
     React: 'react',
-    ReactDOM: 'react-dom'
+    ReactDOM: 'react-dom',
+    _: 'lodash'
   },
 
   // ----------------------------------
