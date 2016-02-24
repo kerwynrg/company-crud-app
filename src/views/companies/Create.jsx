@@ -4,6 +4,13 @@ import { FormsyText } from 'formsy-material-ui';
 import { Form } from 'formsy-react';
 
 class CreateView extends BaseComponent {
+
+  get inputStyles () {
+    return {
+      width: '100%'
+    };
+  };
+
   render () {
     return (
       <div className='container text-center'>
@@ -15,14 +22,16 @@ class CreateView extends BaseComponent {
             validationError='Error name'
             required
             hintText='Indicates name'
-            floatingLabelText='Name' />
+            floatingLabelText='Name'
+            style={this.inputStyles} />
           <FormsyText
             name='address'
             validations='isWords'
             validationError='Error address'
             required
             hintText='Indicates address'
-            floatingLabelText='Address' />
+            floatingLabelText='Address'
+            style={this.inputStyles} />
         </Form>
       </div>
     );
