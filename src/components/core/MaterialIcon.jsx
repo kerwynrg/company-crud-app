@@ -77,9 +77,7 @@ class MaterialIcon extends React.Component <Props> {
 
     return (
       <IconButton
-        iconClassName='material-icons'
         size={size}
-        iconStyle={iconStyle}
         disabled={inactive}
         {...other}
       >

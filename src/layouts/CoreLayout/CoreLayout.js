@@ -1,7 +1,10 @@
 /* @flow */
 
 import '../../styles/core.scss';
-import { AppBar, Styles } from 'material-ui';
+import {
+  AppBar,
+  Styles
+} from 'material-ui';
 import Title from 'react-title-component';
 import {
   BaseComponent,
@@ -16,7 +19,7 @@ class CoreLayout extends BaseComponent {
       leftNavOpen: true,
       title: 'Company CRUD',
       showMenuIconButton: false,
-      muiTheme: Styles.getMuiTheme()
+      muiTheme: Styles.getMuiTheme(Styles.LightRawTheme)
     };
   }
 

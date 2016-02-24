@@ -5,7 +5,7 @@ class ListView extends BaseComponent {
   render () {
     return (
       <div className='container text-center'>
-        <h1>List for all companies</h1>
+        <h2>List for all companies</h2>
       </div>
     );
   }
