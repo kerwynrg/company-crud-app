@@ -217,7 +217,6 @@ class CreateView extends BaseComponent <Props> {
                       <div style={self.styles.inline.inputDiv}>
                         <FormsyText
                           name={`owners[${key}]`}
-                          validations='isAlphanumeric'
                           validationError='Error'
                           required
                           floatingLabelText='Owner'
