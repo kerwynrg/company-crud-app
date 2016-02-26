@@ -38,7 +38,7 @@ class Api {
     });
   }
 
-  post = (entity :String, data :Object) => {
+  create = (entity :String, data :Object) => {
     return this.execute(entity, {
       method: 'POST',
       headers: headers,
@@ -51,7 +51,7 @@ class Api {
       method: 'PUT',
       headers: headers,
       body: JSON.stringify(data)
-    });
+    }, id);
   }
 }
 export default new Api();
