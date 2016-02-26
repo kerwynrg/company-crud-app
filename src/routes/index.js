@@ -26,6 +26,7 @@ export default (store) => (
     <Route path='companies'>
       <Route path='list' component={CompaniesListView} />
       <Route path='create' component={CompaniesCreateView} />
+      <Route path='edit/:companyId' component={CompaniesCreateView} />
     </Route>
   </Route>
 );

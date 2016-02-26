@@ -13,20 +13,39 @@ import Add from 'material-ui/lib/svg-icons/content/add';
 import Remove from 'material-ui/lib/svg-icons/content/remove';
 import { FormsyText } from 'formsy-material-ui';
 import { Form } from 'formsy-react';
+import api from 'rest/api';
 
 const {
   Colors
 } = Styles;
 
 const trueVar = true;
-class CreateView extends BaseComponent {
+
+type Props = {
+  params: Object
+}
+class CreateView extends BaseComponent <Props> {
   constructor (props) {
     super(props);
 
     this.state = {
-      owners: [],
+      company: {
+        owners: []
+      },
       canSubmit: false
     };
+  }
+
+  componentWillMount = () => {
+    if (this.props.params.companyId) {
+      var _this = this;
+      api.get('companies', this.props.params.companyId)
+      .then(function (company) {
+        _this.setState({
+          company: company
+        });
+      });
+    }
   }
 
   get styles () {
@@ -57,20 +76,21 @@ class CreateView extends BaseComponent {
   };
 
   handleAddOwner = (event) => {
-    this.state.owners.push('');
+    let company = this.state.company;
+    company.owners.push('');
     this.setState({
-      owners: this.state.owners
+      company: company
     });
   };
 
   handleRemoveOwner = (params, event) => {
-    let owners = this.state.owners;
-    owners = _.filter(owners, function (value, index) {
+    let company = this.state.company;
+    company.owners = _.filter(company.owners, function (value, index) {
       return index !== params.key;
     });
 
     this.setState({
-      owners: owners
+      company: company
     });
   };
 
@@ -106,12 +126,14 @@ class CreateView extends BaseComponent {
             onValidSubmit={this.submitForm} >
             <FormsyText
               name='name'
+              value={self.state.company.name}
               validationError='Error name'
               required
               floatingLabelText='Name'
               style={this.styles.general.input} />
             <FormsyText
               name='address'
+              value={self.state.company.address}
               required
               floatingLabelText='Address'
               multiLine={trueVar}
@@ -120,16 +142,19 @@ class CreateView extends BaseComponent {
               style={this.styles.general.input} />
             <FormsyText
               name='city'
+              value={self.state.company.city}
               required
               floatingLabelText='City'
               style={this.styles.general.input} />
             <FormsyText
               name='country'
+              value={self.state.company.country}
               required
               floatingLabelText='Country'
               style={this.styles.general.input} />
             <FormsyText
               name='email'
+              value={self.state.company.email}
               validations='isEmail'
               validationError='Error'
               required
@@ -137,6 +162,7 @@ class CreateView extends BaseComponent {
               style={this.styles.general.input} />
             <FormsyText
               name='phone'
+              value={self.state.company.phone}
               validations='isNumeric'
               validationError='Error'
               required
@@ -158,7 +184,7 @@ class CreateView extends BaseComponent {
               </div>
               <Divider />
               <List>
-                {this.state.owners.map(function (result, key) {
+                {self.state.company.owners.map(function (result, key) {
                   let handleRemoveOwner = self.handleRemoveOwner.bind(this, {key: key});
                   return (
                     <ListItem key={key} disabled>
@@ -198,5 +224,9 @@ class CreateView extends BaseComponent {
     );
   }
 }
+
+CreateView.propTypes = {
+  params: React.PropTypes.object
+};
 
 export default CreateView;

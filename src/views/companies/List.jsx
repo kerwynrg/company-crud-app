@@ -1,5 +1,6 @@
 /* @flow */
 import { BaseComponent } from 'components/core';
+import { Link } from 'react-router';
 import api from 'rest/api';
 
 class ListView extends BaseComponent {
@@ -14,7 +15,6 @@ class ListView extends BaseComponent {
     var _this = this;
     api.getAll('companies')
     .then(function (companies) {
-      console.info(companies);
       _this.setState({
         companies: companies
       });
@@ -27,7 +27,16 @@ class ListView extends BaseComponent {
         <h2>List for all companies</h2>
         <ul>
           {this.state.companies.map(function (company, key) {
-            return (<li key={key}>{`${company.name} - ${company._links.company.href}`}</li>);
+            let splittedUrl = company._links.company.href.split('/');
+            let id = splittedUrl[splittedUrl.length - 1];
+            return (
+              <li key={key}>
+                <Link
+                  to={`/companies/edit/${id}`} >
+                  {`${company.name} - ${company._links.company.href}`}
+                </Link>
+              </li>
+            );
           })}
         </ul>
       </div>
