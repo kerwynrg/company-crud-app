@@ -9,10 +9,33 @@ import config from '../config';
 import webpackProxyMiddleware from './middleware/webpack-proxy';
 import webpackDevMiddleware from './middleware/webpack-dev';
 import webpackHMRMiddleware from './middleware/webpack-hmr';
+import request from 'co-request';
+import mount from 'koa-mount';
 
 const debug = _debug('app:server');
 const paths = config.utils_paths;
 const app = new Koa();
+
+const apiLink = 'http://localhost:8080';
+
+// Let's make a bridge
+function * api (next) {
+  var options = {
+    uri: apiLink + this.originalUrl,
+    method: this.request.method,
+    body: this.request.body,
+    json: true,
+    headers: {
+      'User-Agent': 'request',
+      'content-type': 'application/json'
+    }
+  };
+
+  let response = yield request(options);
+
+  this.body = response.body;
+}
+app.use(convert(mount('/api', api)));
 
 // This rewrites all routes requests to the root /index.html file
 // (ignoring file requests). If you want to implement isomorphic
@@ -28,7 +51,9 @@ if (config.env === 'development') {
   const compiler = webpack(webpackConfig);
 
   // Enable webpack-dev and webpack-hot middleware
-  const { publicPath } = webpackConfig.output;
+  const {
+    publicPath
+  } = webpackConfig.output;
 
   if (config.proxy && config.proxy.enabled) {
     const options = config.proxy.options;
