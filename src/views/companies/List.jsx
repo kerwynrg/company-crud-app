@@ -2,6 +2,11 @@
 import { BaseComponent } from 'components/core';
 import { Link } from 'react-router';
 import api from 'rest/api';
+import {
+  Divider,
+  List,
+  ListItem
+} from 'material-ui';
 
 class ListView extends BaseComponent {
   constructor (props) {
@@ -23,22 +28,27 @@ class ListView extends BaseComponent {
 
   render () {
     return (
-      <div className='container text-center'>
+      <div>
         <h2>List for all companies</h2>
-        <ul>
+        <Divider />
+        <List>
           {this.state.companies.map(function (company, key) {
             let splittedUrl = company._links.company.href.split('/');
             let id = splittedUrl[splittedUrl.length - 1];
             return (
-              <li key={key}>
-                <Link
-                  to={`/companies/edit/${id}`} >
-                  {`${company.name} - ${company._links.company.href}`}
-                </Link>
-              </li>
+              <Link
+                key={key}
+                to={`/companies/edit/${id}`}
+                style={{
+                  textDecoration: 'none'
+                }}>
+                <ListItem>
+                  <span>{`${company.name}`}</span>
+                </ListItem>
+              </Link>
             );
           })}
-        </ul>
+        </List>
       </div>
     );
   }

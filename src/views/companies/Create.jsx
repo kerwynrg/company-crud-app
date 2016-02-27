@@ -31,6 +31,7 @@ class CreateView extends BaseComponent <Props> {
       company: {
         owners: []
       },
+      type: 'New',
       canSubmit: false
     };
   }
@@ -38,6 +39,10 @@ class CreateView extends BaseComponent <Props> {
   componentWillMount = () => {
     if (this.props.params.companyId) {
       let _this = this;
+      this.setState({
+        type: 'Edit'
+      });
+
       api.get('companies', this.props.params.companyId)
       .then(function (company) {
         _this.setState({
@@ -129,7 +134,7 @@ class CreateView extends BaseComponent <Props> {
 
     return (
       <div>
-        <h2>New company</h2>
+        <h2>{this.state.type} company</h2>
         <Divider />
         <Form
           onValid={this.enableButton}
