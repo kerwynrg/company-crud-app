@@ -3,7 +3,8 @@
 import '../../styles/core.scss';
 import {
   AppBar,
-  Styles
+  Styles,
+  Paper
 } from 'material-ui';
 import Title from 'react-title-component';
 import {
@@ -67,8 +68,10 @@ class CoreLayout extends BaseComponent {
   get contentStyles () {
     return {
       marginLeft: this.state.muiTheme.leftNav.width,
-      marginTop: this.state.muiTheme.appBar.height + 20,
-      paddingLeft: 20
+      marginTop: this.state.muiTheme.appBar.height + 20 + 15,
+      marginBottom: 15,
+      marginRight: 15,
+      paddingLeft: 35
     };
   };
 
@@ -103,7 +106,12 @@ class CoreLayout extends BaseComponent {
             onRequestChangeList={this.handleRequestChangeList} />
           <div
             style={this.contentStyles}>
-            {children}
+            <Paper style={{
+              margin: '15px 15px 15px 0px',
+              padding: 15
+            }} >
+              {children}
+            </Paper>
           </div>
         </div>
       </div>

@@ -1,7 +1,6 @@
 /* @flow */
 import { BaseComponent } from 'components/core';
 import {
-  Paper,
   Divider,
   List,
   ListItem,
@@ -124,118 +123,113 @@ class CreateView extends BaseComponent <Props> {
   };
 
   render () {
-    let self = this;
+    let _this = this;
     let company = this.state.company;
     company.owners = company.owners || [];
 
     return (
-      <Paper
-        style={{
-          margin: '15px 15px 15px 0px',
-          padding: 15
-        }} >
-        <div className='container text-center'>
-          <h2>New company</h2>
-          <Form
-            onValid={this.enableButton}
-            onInvalid={this.disableButton}
-            onValidSubmit={this.submitForm} >
-            <FormsyText
-              name='name'
-              value={company.name}
-              validationError='Error name'
-              required
-              floatingLabelText='Name'
-              style={this.styles.general.input} />
-            <FormsyText
-              name='address'
-              value={company.address}
-              required
-              floatingLabelText='Address'
-              multiLine={trueVar}
-              rows={2}
-              rowsMax={4}
-              style={this.styles.general.input} />
-            <FormsyText
-              name='city'
-              value={company.city}
-              required
-              floatingLabelText='City'
-              style={this.styles.general.input} />
-            <FormsyText
-              name='country'
-              value={company.country}
-              required
-              floatingLabelText='Country'
-              style={this.styles.general.input} />
-            <FormsyText
-              name='email'
-              value={company.email}
-              validations='isEmail'
-              validationError='Error'
-              required
-              floatingLabelText='Email'
-              style={this.styles.general.input} />
-            <FormsyText
-              name='phone'
-              value={company.phone}
-              validations='isNumeric'
-              validationError='Error'
-              required
-              floatingLabelText='Phone number'
-              style={this.styles.general.input} />
+      <div>
+        <h2>New company</h2>
+        <Divider />
+        <Form
+          onValid={this.enableButton}
+          onInvalid={this.disableButton}
+          onValidSubmit={this.submitForm} >
+          <FormsyText
+            name='name'
+            value={company.name}
+            validationError='Error name'
+            required
+            floatingLabelText='Name'
+            style={this.styles.general.input} />
+          <FormsyText
+            name='address'
+            value={company.address}
+            required
+            floatingLabelText='Address'
+            multiLine={trueVar}
+            rows={2}
+            rowsMax={4}
+            style={this.styles.general.input} />
+          <FormsyText
+            name='city'
+            value={company.city}
+            required
+            floatingLabelText='City'
+            style={this.styles.general.input} />
+          <FormsyText
+            name='country'
+            value={company.country}
+            required
+            floatingLabelText='Country'
+            style={this.styles.general.input} />
+          <FormsyText
+            name='email'
+            value={company.email}
+            validations='isEmail'
+            validationError='Error'
+            required
+            floatingLabelText='Email'
+            style={this.styles.general.input} />
+          <FormsyText
+            name='phone'
+            value={company.phone}
+            validations='isNumeric'
+            validationError='Error'
+            required
+            floatingLabelText='Phone number'
+            style={this.styles.general.input} />
+          <div>
             <div>
-              <div>
-                <div style={this.styles.inline.buttonDiv}>
-                  <FloatingActionButton
-                    backgroundColor={Colors.green600}
-                    mini={trueVar}
-                    onClick={this.handleAddOwner}>
-                    <Add color={Colors.white}/>
-                  </FloatingActionButton>
-                </div>
-                <div style={this.styles.inline.buttonDiv}>
-                  <h4>Owners</h4>
-                </div>
+              <div style={this.styles.inline.buttonDiv}>
+                <FloatingActionButton
+                  backgroundColor={Colors.green600}
+                  mini={trueVar}
+                  onClick={this.handleAddOwner}>
+                  <Add color={Colors.white}/>
+                </FloatingActionButton>
               </div>
-              <Divider />
-              <List>
-                {company.owners.map(function (result, key) {
-                  let handleRemoveOwner = self.handleRemoveOwner.bind(this, {key: key});
-                  return (
-                    <ListItem key={key} disabled>
-                      <div style={self.styles.inline.buttonDiv}>
-                        <FloatingActionButton
-                          backgroundColor={Colors.red600}
-                          mini={trueVar}
-                          onClick={handleRemoveOwner}>
-                          <Remove color={Colors.white}/>
-                        </FloatingActionButton>
-                      </div>
-                      <div style={self.styles.inline.inputDiv}>
-                        <FormsyText
-                          name={`owners[${key}]`}
-                          validationError='Error'
-                          required
-                          floatingLabelText='Owner'
-                          value={result}
-                          style={self.styles.inline.input} />
-                      </div>
-                    </ListItem>
-                  );
-                })}
-              </List>
+              <div style={this.styles.inline.buttonDiv}>
+                <h4>Owners</h4>
+              </div>
             </div>
-            <div style={{textAlign: 'right'}}>
-              <RaisedButton
-                type='submit'
-                label='Save'
-                secondary={trueVar}
-                disabled={!this.state.canSubmit} />
-            </div>
-          </Form>
-        </div>
-      </Paper>
+            <Divider />
+            <List>
+              {company.owners.map(function (result, key) {
+                let handleRemoveOwner = _this.handleRemoveOwner.bind(this, {key: key});
+                return (
+                  <ListItem key={key} disabled>
+                    <div style={_this.styles.inline.buttonDiv}>
+                      <FloatingActionButton
+                        backgroundColor={Colors.red600}
+                        mini={trueVar}
+                        onClick={handleRemoveOwner}>
+                        <Remove color={Colors.white}/>
+                      </FloatingActionButton>
+                    </div>
+                    <div style={_this.styles.inline.inputDiv}>
+                      <FormsyText
+                        name={`owners[${key}]`}
+                        validationError='Error'
+                        required
+                        floatingLabelText='Owner'
+                        value={result}
+                        style={_this.styles.inline.input} />
+                    </div>
+                  </ListItem>
+                );
+              })}
+            </List>
+          </div>
+          <div style={{textAlign: 'right'}}>
+            <RaisedButton
+              type='submit'
+              label='Save'
+              secondary={trueVar}
+              disabled={!this.state.canSubmit} />
+          </div>
+        </Form>
+      </div>
     );
   }
 }
