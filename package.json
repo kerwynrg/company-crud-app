@@ -65,6 +65,7 @@
   "license": "MIT",
   "dependencies": {
     "better-npm-run": "0.0.5",
+    "co-body": "^4.0.0",
     "co-request": "^1.0.0",
     "debug": "^2.2.0",
     "formsy-material-ui": "^0.3.8",

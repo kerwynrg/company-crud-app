@@ -11,6 +11,7 @@ import webpackDevMiddleware from './middleware/webpack-dev';
 import webpackHMRMiddleware from './middleware/webpack-hmr';
 import request from 'co-request';
 import mount from 'koa-mount';
+import parser from 'co-body';
 
 const debug = _debug('app:server');
 const paths = config.utils_paths;
@@ -20,10 +21,13 @@ const apiLink = 'http://localhost:8080';
 
 // Let's make a bridge
 function * api (next) {
+  if (this.request.method === 'POST' || this.request.method === 'PUT' || this.request.method === 'PATCH') {
+    var body = yield parser(this);
+  }
   var options = {
     uri: apiLink + this.originalUrl,
     method: this.request.method,
-    body: this.request.body,
+    body: body,
     json: true,
     headers: {
       'User-Agent': 'request',
@@ -35,6 +39,7 @@ function * api (next) {
 
   this.body = response.body;
 }
+
 app.use(convert(mount('/api', api)));
 
 // This rewrites all routes requests to the root /index.html file

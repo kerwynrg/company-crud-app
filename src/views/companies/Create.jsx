@@ -107,9 +107,6 @@ class CreateView extends BaseComponent <Props> {
   };
 
   submitForm = (data) => {
-    console.info(data);
-    // this.context.router.goBack();
-
     let _this = this;
     let request;
     if (this.props.params.companyId) {
@@ -122,6 +119,7 @@ class CreateView extends BaseComponent <Props> {
       _this.setState({
         company: company
       });
+      _this.context.router.goBack();
     });
   };
 
