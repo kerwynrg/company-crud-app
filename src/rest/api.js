@@ -16,10 +16,10 @@ class Api {
     }
 
     return fetch(url, options)
-    .then(function (response) {
+    .then((response) => {
       return response.json();
     })
-    .then(function (responseObject) {
+    .then((responseObject) => {
       return id || options.method === 'POST' ? responseObject : responseObject._embedded[entity];
     });
   }
